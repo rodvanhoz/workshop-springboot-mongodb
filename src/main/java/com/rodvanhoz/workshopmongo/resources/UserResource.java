@@ -58,4 +58,11 @@ public class UserResource {
 		return ResponseEntity.created(uri).build();
 	}
 
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+	public ResponseEntity<UserDto> delete(@PathVariable String id) {
+		
+		service.delete(id);
+		return ResponseEntity.noContent().build();
+	}
+
 }
