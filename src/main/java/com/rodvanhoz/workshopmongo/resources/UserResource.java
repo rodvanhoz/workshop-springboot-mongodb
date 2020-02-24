@@ -15,7 +15,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.rodvanhoz.workshopmongo.domain.Post;
 import com.rodvanhoz.workshopmongo.domain.User;
-import com.rodvanhoz.workshopmongo.dto.UserDto;
+import com.rodvanhoz.workshopmongo.dto.UserDTO;
 import com.rodvanhoz.workshopmongo.services.UserService;
 
 @RestController
@@ -27,25 +27,25 @@ public class UserResource {
 	
 	@RequestMapping(method = RequestMethod.GET)
 	// @GetMapping
-	public ResponseEntity<List<UserDto>> findAll() {
+	public ResponseEntity<List<UserDTO>> findAll() {
 		
 		List<User> list = service.findAll();
-		List<UserDto> listDto = list.stream()
-				.map(x -> new UserDto(x))
+		List<UserDTO> listDto = list.stream()
+				.map(x -> new UserDTO(x))
 				.collect(Collectors.toList());
 		return ResponseEntity.ok().body(listDto);
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public ResponseEntity<UserDto> findById(@PathVariable String id) {
+	public ResponseEntity<UserDTO> findById(@PathVariable String id) {
 		
 		User obj = service.findById(id);
-		return ResponseEntity.ok().body(new UserDto(obj));
+		return ResponseEntity.ok().body(new UserDTO(obj));
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
 	//@PostMapping
-	public ResponseEntity<Void> insert(@RequestBody UserDto objDto) {
+	public ResponseEntity<Void> insert(@RequestBody UserDTO objDto) {
 		
 		User obj = service.fromDTO(objDto);
 		obj = service.insert(obj);
@@ -60,7 +60,7 @@ public class UserResource {
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-	public ResponseEntity<UserDto> delete(@PathVariable String id) {
+	public ResponseEntity<UserDTO> delete(@PathVariable String id) {
 		
 		service.delete(id);
 		return ResponseEntity.noContent().build();
@@ -68,7 +68,7 @@ public class UserResource {
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	//@PostMapping
-	public ResponseEntity<Void> update(@RequestBody UserDto objDto, @PathVariable String id) {
+	public ResponseEntity<Void> update(@RequestBody UserDTO objDto, @PathVariable String id) {
 		
 		User obj = service.fromDTO(objDto);
 		obj.setId(id);
